@@ -1,6 +1,7 @@
 require './game.rb'
 require './random_player.rb'
 require './your_player.rb'
+require './multiple_player.rb'
 require './helper.rb'
 
 srand(129)
@@ -29,7 +30,17 @@ random_strategy = -> {
   game.start
 }
 
+multi_player_strategy = -> {
+  game = Game.new(grid_size: grid_size)
+  player1 = MultiplePlayer.new(game: game, name: 'Player 1')
+  player2 = MultiplePlayer.new(game: game, name: 'Player 2')
+  game.add_player(player1)
+  game.add_player(player2)
+  game.start
+}
+
 random_results = random_strategy.call
 your_results = your_strategy.call
+multi_player_results = multi_player_strategy.call
 
-compare_hashes(your_results, random_results)
+compare_hashes(your_results, multi_player_results, random_results)
